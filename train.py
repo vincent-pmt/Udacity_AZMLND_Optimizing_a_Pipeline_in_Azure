@@ -54,18 +54,27 @@ def main():
     # TODO: Create TabularDataset using TabularDatasetFactory
     # Data is located at:
     # "https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv"
+    
+    ### YOUR CODE HERE ###
+    
+    datapath = 'https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv'
+    ds = TabularDatasetFactory.from_delimited_files(path=datapath)
 
-    ds = ### YOUR CODE HERE ###
+    print(ds.to_pandas_dataframe())
     
     x, y = clean_data(ds)
 
     # TODO: Split data into train and test sets.
+ 
+    # split the dataset
+    x_train, x_test, y_train, y_test = train_test_split(
+    x, y, test_size=0.05, random_state=0)
 
     ### YOUR CODE HERE ###a
 
     model = LogisticRegression(C=args.C, max_iter=args.max_iter).fit(x_train, y_train)
-
     accuracy = model.score(x_test, y_test)
+    
     run.log("Accuracy", np.float(accuracy))
 
 if __name__ == '__main__':
